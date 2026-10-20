@@ -1,0 +1,16 @@
+# Dossiers d'images / médias
+/assets/
+/img/
+
+# Cache généré par l'API de veille
+php/news_cache.json
+
+# Fichiers d'environnement / secrets
+.env
+php/config.local.php
+
+# Fichiers système & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
