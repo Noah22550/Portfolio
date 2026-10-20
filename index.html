@@ -17,7 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -45,7 +45,6 @@
 
     <!-- ==================== HERO ==================== -->
     <section class="hero" id="hero">
-        <canvas id="particles-canvas"></canvas>
         <div class="hero-content">
             <div class="hero-badge">
                 <i class="ri-code-s-slash-line"></i>
@@ -62,7 +61,7 @@
             </div>
             <p class="hero-description">
                 Passionné par le développement web et les nouvelles technologies.
-                Je crée des applications modernes, performantes et intuitives.
+                Je continue à me développer et à approfondir mes connaissances.
             </p>
             <div class="hero-cta">
                 <a href="#projects" class="btn btn-primary">
@@ -76,11 +75,11 @@
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <span class="stat-number" data-count="12">0</span>
+                    <span class="stat-number" data-count="?">0</span>
                     <span class="stat-label">Projets réalisés</span>
                 </div>
                 <div class="hero-stat">
-                    <span class="stat-number" data-count="8">0</span>
+                    <span class="stat-number" data-count="">0</span>
                     <span class="stat-label">Technologies</span>
                 </div>
                 <div class="hero-stat">
@@ -108,7 +107,7 @@
                 <div class="about-image reveal reveal-left">
                     <div class="about-image-wrapper">
                         <div class="about-image-placeholder">
-                            <img src="assets/img/photo.jpg" alt="Photo de profil">
+                            <img src="assets/img/moi.jpg" alt="Photo de profil">
                         </div>
                         <div class="about-image-decoration"></div>
                     </div>
@@ -122,9 +121,7 @@
                     </p>
                     <p class="about-text">
                         Mon parcours m'a permis de maîtriser diverses technologies front-end et back-end,
-                        et de réaliser des projets concrets lors de mes stages en entreprise. Je suis
-                        passionné par la création d'interfaces utilisateur élégantes et la résolution
-                        de problèmes complexes.
+                        et de réaliser des projets concrets lors de mes stages en entreprise.
                     </p>
                     <div class="about-info-grid">
                         <div class="about-info-item">
@@ -145,22 +142,16 @@
                             <i class="ri-building-line"></i>
                             <div>
                                 <strong>Stage</strong>
-                                <span>Développeur Web</span>
+                                <span></span>
                             </div>
                         </div>
                         <div class="about-info-item">
                             <i class="ri-heart-pulse-line"></i>
                             <div>
                                 <strong>Passions</strong>
-                                <span>Dev, IA, Cybersécurité</span>
+                                <span>Dev, IA</span>
                             </div>
                         </div>
-                    </div>
-                    <a href="#contact" class="btn btn-primary">
-                        <i class="ri-download-2-line"></i>
-                        Télécharger mon CV
-                    </a>
-                </div>
             </div>
         </div>
     </section>
@@ -196,71 +187,15 @@
     <section class="section section-alt" id="veille">
         <div class="container">
             <div class="section-header reveal">
-                <span class="section-tag"><i class="ri-radar-line"></i> Veille technologique</span>
-                <h2 class="section-title">Actualités <span class="gradient-text">Tech</span></h2>
-                <p class="section-description">Ma veille technologique : les dernières actualités du monde de l'informatique, alimentée en temps réel par API.</p>
+                <span class="section-tag"><i class="ri-rss-line"></i> Veille technologique</span>
+                <h2 class="section-title">Actualités <span class="gradient-text">Intelligence Artificielle</span></h2>
+                <p class="section-description">Ma veille technologique sur l'IA, alimentée automatiquement par flux RSS.</p>
             </div>
             <div class="news-grid" id="news-grid">
-                <!-- Skeleton loaders -->
-                <div class="news-skeleton">
-                    <div class="skeleton-image"></div>
-                    <div class="skeleton-content">
-                        <div class="skeleton-line skeleton-title"></div>
-                        <div class="skeleton-line"></div>
-                        <div class="skeleton-line skeleton-short"></div>
-                    </div>
-                </div>
-                <div class="news-skeleton">
-                    <div class="skeleton-image"></div>
-                    <div class="skeleton-content">
-                        <div class="skeleton-line skeleton-title"></div>
-                        <div class="skeleton-line"></div>
-                        <div class="skeleton-line skeleton-short"></div>
-                    </div>
-                </div>
-                <div class="news-skeleton">
-                    <div class="skeleton-image"></div>
-                    <div class="skeleton-content">
-                        <div class="skeleton-line skeleton-title"></div>
-                        <div class="skeleton-line"></div>
-                        <div class="skeleton-line skeleton-short"></div>
-                    </div>
-                </div>
-                <div class="news-skeleton">
-                    <div class="skeleton-image"></div>
-                    <div class="skeleton-content">
-                        <div class="skeleton-line skeleton-title"></div>
-                        <div class="skeleton-line"></div>
-                        <div class="skeleton-line skeleton-short"></div>
-                    </div>
-                </div>
-                <div class="news-skeleton">
-                    <div class="skeleton-image"></div>
-                    <div class="skeleton-content">
-                        <div class="skeleton-line skeleton-title"></div>
-                        <div class="skeleton-line"></div>
-                        <div class="skeleton-line skeleton-short"></div>
-                    </div>
-                </div>
-                <div class="news-skeleton">
-                    <div class="skeleton-image"></div>
-                    <div class="skeleton-content">
-                        <div class="skeleton-line skeleton-title"></div>
-                        <div class="skeleton-line"></div>
-                        <div class="skeleton-line skeleton-short"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="news-error" id="news-error" style="display: none;">
-                <i class="ri-wifi-off-line"></i>
-                <h3>Impossible de charger les actualités</h3>
-                <p>Vérifiez que XAMPP (Apache) est lancé et que vous avez configuré votre clé API dans <code>php/news-proxy.php</code>.</p>
-                <button class="btn btn-outline" onclick="loadNews()">
-                    <i class="ri-refresh-line"></i> Réessayer
-                </button>
+                <p class="news-source">Chargement des actualités...</p>
             </div>
             <div class="news-source reveal">
-                <p><i class="ri-information-line"></i> Données fournies par <a href="https://gnews.io/" target="_blank" rel="noopener">GNews API</a> — Mise à jour automatique</p>
+                <p><i class="ri-rss-fill"></i> Source : Flux RSS Google Actualités (Thème : Intelligence Artificielle)</p>
             </div>
         </div>
     </section>
@@ -368,6 +303,6 @@
         <i class="ri-arrow-up-line"></i>
     </button>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=3"></script>
 </body>
 </html>

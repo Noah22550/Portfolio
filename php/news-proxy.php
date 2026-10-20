@@ -1,91 +1,36 @@
 <?php
-/**
- * Proxy PHP pour l'API GNews.io
- * Contourne les restrictions CORS et met en cache les résultats.
- *
- * ====================================================
- *  CONFIGURATION : Remplacez YOUR_API_KEY_HERE par
- *  votre clé API gratuite obtenue sur https://gnews.io/
- * ====================================================
- */
-
-// ─── Configuration ───────────────────────────────────
-$API_KEY    = 'eb7461a47a67424584150e9d96430618';  // ⬅️ Remplacez par votre clé API GNews
-$TOPIC      = 'technology';
-$LANG       = 'fr';
-$COUNTRY    = 'fr';
-$MAX        = 6;
-$CACHE_TIME = 3600; // Cache de 1 heure (en secondes)
-$CACHE_FILE = __DIR__ . '/news_cache.json';
-
-// ─── Headers CORS ────────────────────────────────────
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET');
 
-// ─── Vérification de la clé API ──────────────────────
-if ($API_KEY === 'YOUR_API_KEY_HERE') {
-    // Mode démo : retourner des articles fictifs pour la démonstration
-    echo json_encode([
-        'articles' => [ ],
-    ]);
+$cacheFile = __DIR__ . '/news_cache.json';
+
+// Si le cache existe et a moins d'1 heure (3600s), on l'affiche instantanément
+if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < 3600)) {
+    readfile($cacheFile);
     exit;
 }
 
-// ─── Vérifier le cache ───────────────────────────────
-if (file_exists($CACHE_FILE)) {
-    $cacheAge = time() - filemtime($CACHE_FILE);
-    if ($cacheAge < $CACHE_TIME) {
-        $cached = file_get_contents($CACHE_FILE);
-        if ($cached !== false) {
-            echo $cached;
-            exit;
-        }
-    }
-}
+// Flux RSS Google News — Sujet : Intelligence Artificielle
+$rssUrl = 'https://news.google.com/rss/search?q=Intelligence+Artificielle&hl=fr&gl=FR&ceid=FR:fr';
+$xml = @simplexml_load_file($rssUrl);
 
-// ─── Appel API GNews ─────────────────────────────────
-$url = sprintf(
-    'https://gnews.io/api/v4/top-headlines?topic=%s&lang=%s&country=%s&max=%d&apikey=%s',
-    urlencode($TOPIC),
-    urlencode($LANG),
-    urlencode($COUNTRY),
-    $MAX,
-    urlencode($API_KEY)
-);
-
-$context = stream_context_create([
-    'http' => [
-        'method' => 'GET',
-        'timeout' => 10,
-        'header' => 'User-Agent: Portfolio-BTS-SIO/1.0'
-    ]
-]);
-
-$response = @file_get_contents($url, false, $context);
-
-if ($response === false) {
-    http_response_code(502);
-    echo json_encode([
-        'error' => 'Impossible de contacter l\'API GNews.',
-        'details' => 'Vérifiez votre connexion Internet et votre clé API.'
-    ]);
+if (!$xml) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Impossible de charger le flux RSS']);
     exit;
 }
 
-// ─── Valider la réponse ──────────────────────────────
-$data = json_decode($response, true);
-if (json_last_error() !== JSON_ERROR_NONE || !isset($data['articles'])) {
-    http_response_code(502);
-    echo json_encode([
-        'error' => 'Réponse invalide de l\'API GNews.',
-        'details' => $response
-    ]);
-    exit;
+$articles = [];
+foreach ($xml->channel->item as $item) {
+    if (count($articles) >= 6) break;
+
+    $articles[] = [
+        'title'  => (string) $item->title,
+        'link'   => (string) $item->link,
+        'date'   => date('d/m/Y', strtotime((string) $item->pubDate)),
+        'source' => (string) ($item->source ?: 'Google News')
+    ];
 }
 
-// ─── Sauvegarder le cache ────────────────────────────
-file_put_contents($CACHE_FILE, $response, LOCK_EX);
-
-// ─── Retourner les données ───────────────────────────
-echo $response;
+$json = json_encode($articles);
+file_put_contents($cacheFile, $json);
+echo $json;
