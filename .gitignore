@@ -1,7 +1,5 @@
 # Dossiers d'images / médias
-/assets/
-/img/
-
+moi.jpg
 # Cache généré par l'API de veille
 php/news_cache.json
 
